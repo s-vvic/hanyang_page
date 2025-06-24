@@ -5,9 +5,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def Cal_tfidf(docs):
     f = open(f'documents/{docs}', 'r', encoding='UTF-8')
-    lines = f.read().splitlines()
+    lines = f.read().replace("\n"," ").replace(".","\n").splitlines()
     f.close()
-    print(lines)
 
     vectorizer = TfidfVectorizer()
     tfidf_matrix = vectorizer.fit_transform(lines)
