@@ -21,13 +21,8 @@ def Cal_tfidf(tokens):
     return similarities
 
 def Data_Preprocessing():
-    # NLTK Data 다운로드
-    nltk.download('punkt_tab')
-    nltk.download('stopwords')
-    nltk.download('wordnet')
-
     # 텍스트 데이터
-    f = open(f'documents/test.txt', 'r', encoding='UTF-8')
+    f = open(f'documents', 'r', encoding='UTF-8')
     lines = f.read()
     f.close()
     text = lines
