@@ -5,19 +5,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 ### 문서 데이터의 전처리에 필요한 module
+import pandas as pd
+import numpy as np
 import re
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 
-def Cal_tfidf(docs):
-    f = open(f'documents/{docs}', 'r', encoding='UTF-8')
-    lines = f.read().replace("\n"," ").replace(".","\n").splitlines()
-    f.close()
-
+def Cal_tfidf(tokens):
     vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(lines)
+    tfidf_matrix = vectorizer.fit_transform(tokens)
 
     similarities = cosine_similarity(tfidf_matrix[0], tfidf_matrix)
     return similarities
@@ -29,7 +27,10 @@ def Data_Preprocessing():
     nltk.download('wordnet')
 
     # 텍스트 데이터
-    text = "This is an example sentence. It contains some words and punctuation!"
+    f = open(f'documents/test.txt', 'r', encoding='UTF-8')
+    lines = f.read()
+    f.close()
+    text = lines
 
     # 1. 정제 (소문자 변환 및 특수 문자 제거)
     text = re.sub(r'[^a-zA-Z\s]', '', text.lower())
@@ -54,7 +55,8 @@ def Data_Preprocessing():
     print("불용어 제거:", filtered_tokens)
     print("어간 추출:", stemmed_tokens)
     print("표제어 추출:", lemmatized_tokens)
+    return lemmatized_tokens
 
 ### test code
-#print(Cal_tfidf("test.txt"))
-Data_Preprocessing()
+tokens = Data_Preprocessing()
+print(Cal_tfidf(tokens))
