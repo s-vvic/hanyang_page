@@ -2,6 +2,8 @@ from konlpy.tag import Okt
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
+from nltk.corpus import stopwords
+
 
 # nltk 리소스 다운로드
 nltk.download('punkt')
@@ -49,3 +51,14 @@ elif isEnglishOrKorean(text) == 0:
     # 명사 추출 (품사 태그가 NN, NNS, NNP, NNPS인 단어 추출)
     nouns = [word for word, pos in pos_tags if pos in ['NN', 'NNS', 'NNP', 'NNPS']]
     print("Nouns:", nouns)
+
+example = "Family is not an important thing. It's everything."
+stop_words = set(stopwords.words('english')) 
+
+word_tokens = word_tokenize(example)
+
+result = []
+for word in word_tokens: 
+    if word not in stop_words: 
+        result.append(word) 
+
