@@ -34,6 +34,8 @@ import fitz
 import openpyxl
 
 class Search_docs:
+    def __init__(self):
+        self.folder_path = "./documents"
     
     def read_txt(self, path):             #txt 파일 읽는 함수
         with open(path, "r", encoding="utf-8") as f:  # "r" 모드는 읽기 모드 "encoding" 은 한글이 깨지지 않게 열기
@@ -89,11 +91,11 @@ class Search_docs:
         else:
             return ""
 
-    def load_documents_from_folder(self, folder_path):    #폴더 안에 있는 문서를 읽어서 내용이랑 파일 이름을 한번에 가져오는 함수
+    def load_documents_from_folder(self):    #폴더 안에 있는 문서를 읽어서 내용이랑 파일 이름을 한번에 가져오는 함수
         docs = []                                   #문서 내용들을 저장하는 리스트
         filenames = []                              #각 문서의 파일 이름을 저장할 리스트
-        for filename in os.listdir(folder_path):    #폴더에 있는 모든 파일들의 이름을 리스트로 반환
-            full_path = os.path.join(folder_path, filename)     # 전체 경로 생성
+        for filename in os.listdir(self.folder_path):    #폴더에 있는 모든 파일들의 이름을 리스트로 반환
+            full_path = os.path.join(self.folder_path, filename)     # 전체 경로 생성
             if os.path.isfile(full_path):           #진짜 파일인지 확인하는 조건문
                 content = self.read_any_file(full_path)  #read_any_file() 함수로 파일을 자동 형식 감지해서 읽음
                 if content.strip():
@@ -198,6 +200,10 @@ class Preprocessing:
     for word in word_tokens: 
         if word not in stop_words: 
             result.append(word) 
+
+#----------------------------------------------------------------------------------------------
+
+# ------------------ query와 문서 내용의 유사도 계산 및 관련도 높은 문서 랭킹 출력 --------------------
 
 import math
 from collections import Counter
