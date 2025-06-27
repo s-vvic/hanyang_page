@@ -10,9 +10,11 @@ class Controller:
     def execution(self):
 
         raw_corpus, filenames = DOCS.load_documents_from_folder()
+        print(raw_corpus)
 
         # 1. 문서 토큰화
-        tokenized_corpus = PREPROCESS.Tokenize(raw_corpus)
+        tokenized_corpus = [PREPROCESS.Tokenize(doc) for doc in raw_corpus]
+        print(tokenized_corpus)
 
         # 2. 문서 길이 및 평균 길이 계산
         document_lengths = [len(doc) for doc in tokenized_corpus]

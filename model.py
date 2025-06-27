@@ -138,23 +138,23 @@ class Preprocessing:
                 okt = Okt()
 
                 # 명사 추출
-                nouns = okt.nouns(self.text)
+                nouns = okt.nouns(text)
                 return nouns
 
             # 영어 문서라면
             elif self.isEnglishOrKorean(text) == 0:
-
-                stop_words = set(stopwords.words('english'))
-                
                 # 토큰화 (형태소 분석)
                 tokens = word_tokenize(text)
+                #print("Tokens:", tokens)
 
-                result = []
-                for word in tokens: 
-                    if word not in stop_words: 
-                        result.append(word)
+                # 품사 태깅
+                pos_tags = pos_tag(tokens)
+                #print("POS Tags:", pos_tags)
 
-                return result
+                # 명사 추출 (품사 태그가 NN, NNS, NNP, NNPS인 단어 추출)
+                nouns = [word for word, pos in pos_tags if pos in ['NN', 'NNS', 'NNP', 'NNPS']]
+
+                return nouns
 
 #----------------------------------------------------------------------------------------------
 
