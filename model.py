@@ -129,77 +129,32 @@ class Preprocessing:
                 e_count+=1
         return 1 if k_count>e_count else 0
 
-    # 텍스트 정의
-    text =  """Once upon a time there were four little Rabbits,
-            and their names were—
-            Flopsy,
-            Mopsy,
-            Cotton-tail,
-            and Peter.
-            They lived with their Mother in a sand-bank,
-            underneath the root of a very big fr-tree.
-            'Now my dears,' said old Mrs. Rabbit one
-            morning, 'you may go into the felds or down
-            the lane, but don't go into Mr. McGregor's
-            garden: your Father had an accident there; he
-            was put in a pie by Mrs. McGregor.'
-            'Now run along, and don't get into mischief. I am
-            going out.'
-            Then old Mrs. Rabbit took a basket and her
-            umbrella, and went through the wood to the
-            baker's. She bought a loaf of brown bread and
-            fve currant buns.
-            Flopsy, Mopsy, and Cotton-tail, who were good
-            little bunnies, went down the lane to gather
-            blackberries;
-            But Peter, who was very naughty, ran straight
-            away to Mr. McGregor's garden, and squeezed
-            under the gate!
-            First he ate some lettuces and some French
-            beans; and then he ate some radishes;
-            """
+    def Tokenize(self, docs):
+        for text in docs:
+            # 한글 문서라면
+            if self.isEnglishOrKorean(text) == 1:
 
-    # 한글 문서라면
-    if isEnglishOrKorean(text) == 1:
+                # Okt 형태소 분석기 인스턴스 생성
+                okt = Okt()
 
-        # Okt 형태소 분석기 인스턴스 생성
-        okt = Okt()
+                # 명사 추출
+                nouns = okt.nouns(self.text)
+                return nouns
 
-        # 형태소 분석 (토큰화)
-        morphs = okt.morphs(text)
-        print("형태소:", morphs)
+            # 영어 문서라면
+            elif self.isEnglishOrKorean(text) == 0:
 
-        # 품사 태깅
-        pos = okt.pos(text)
-        print("품사 태깅:", pos)
+                stop_words = set(stopwords.words('english'))
+                
+                # 토큰화 (형태소 분석)
+                tokens = word_tokenize(text)
 
-        # 명사 추출
-        nouns = okt.nouns(text)
-        print("명사:", nouns)
+                result = []
+                for word in tokens: 
+                    if word not in stop_words: 
+                        result.append(word)
 
-    # 영어 문서라면
-    elif isEnglishOrKorean(text) == 0:
-        # 토큰화 (형태소 분석)
-        tokens = word_tokenize(text)
-        #print("Tokens:", tokens)
-
-        # 품사 태깅
-        pos_tags = pos_tag(tokens)
-        #print("POS Tags:", pos_tags)
-
-        # 명사 추출 (품사 태그가 NN, NNS, NNP, NNPS인 단어 추출)
-        nouns = [word for word, pos in pos_tags if pos in ['NN', 'NNS', 'NNP', 'NNPS']]
-        print("Nouns:", nouns)
-
-    example = "Family is not an important thing. It's everything."
-    stop_words = set(stopwords.words('english')) 
-
-    word_tokens = word_tokenize(example)
-
-    result = []
-    for word in word_tokens: 
-        if word not in stop_words: 
-            result.append(word) 
+                return result
 
 #----------------------------------------------------------------------------------------------
 

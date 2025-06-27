@@ -3,15 +3,16 @@ import numpy as np
 
 QUERY = model.Get_User_Query()
 DOCS = model.Search_docs()
+PREPROCESS = model.Preprocessing()
 BM25 = model.BM_25()
 
 class Controller:
     def execution(self):
 
-        raw_corpus, filenames = DOCS.load_documents_from_folder('./documents')
+        raw_corpus, filenames = DOCS.load_documents_from_folder()
 
         # 1. 문서 토큰화
-        tokenized_corpus = [BM25.tokenize_document(doc) for doc in raw_corpus]
+        tokenized_corpus = PREPROCESS.Tokenize(raw_corpus)
 
         # 2. 문서 길이 및 평균 길이 계산
         document_lengths = [len(doc) for doc in tokenized_corpus]
