@@ -1,1 +1,1 @@
-어떻게 아냐면 시발 지금 안 되고 있으니까
+This is a test of the BM25 algorithm example.

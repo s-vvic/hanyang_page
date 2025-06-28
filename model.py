@@ -145,7 +145,7 @@ class Preprocessing:
             elif self.isEnglishOrKorean(text) == 0:
                 stop_words = set(stopwords.words('english')) 
 
-                word_tokens = word_tokenize(text)
+                word_tokens = word_tokenize(text.lower())
 
                 result = []
                 for word in word_tokens: 

@@ -19,7 +19,6 @@ class Controller:
         avgdl = sum(document_lengths) / len(document_lengths)
 
         # 3. IDF 값 계산
-        print(tokenized_corpus, type(tokenized_corpus))
         idf_scores, _ = BM25.compute_idf(tokenized_corpus)
 
         # 4. 쿼리 준비
@@ -38,4 +37,4 @@ class Controller:
 
         print("\n랭킹된 문서 내용:")
         for idx in ranked_indices:
-            print(f"문서 {idx}: {filenames[idx]} (점수: {scores[idx]:.4f})")
+            print(f"문서 {idx}: {raw_corpus[idx]} (점수: {scores[idx]:.4f})")
