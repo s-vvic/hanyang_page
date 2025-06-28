@@ -161,11 +161,11 @@ import math
 from collections import Counter
 
 class BM_25:
-    def tokenize_document(doc_text):
+    def tokenize_document(self, doc_text):
         return doc_text.lower().split()
-
+    @staticmethod
     def compute_idf(corpus, k1=1.5, b=0.75):
-        num_documents = len(str(corpus))
+        num_documents = len(corpus)
         doc_freq = Counter()
         for doc in corpus:
             unique_terms_in_doc = set(doc)
@@ -177,7 +177,7 @@ class BM_25:
             idf_scores[term] = math.log((num_documents - df + 0.5) / (df + 0.5) + 1)
         return idf_scores, doc_freq
 
-    def bm25_score(query, document, idf_scores, avgdl, k1=1.5, b=0.75):
+    def bm25_score(self, query, document, idf_scores, avgdl, k1=1.5, b=0.75):
         score = 0.0
         doc_len = len(document)
         term_counts = Counter(document)

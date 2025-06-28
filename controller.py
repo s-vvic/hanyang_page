@@ -19,7 +19,7 @@ class Controller:
         avgdl = sum(document_lengths) / len(document_lengths)
 
         # 3. IDF 값 계산
-        print(tokenized_corpus)
+        print(tokenized_corpus, type(tokenized_corpus))
         idf_scores, _ = BM25.compute_idf(tokenized_corpus)
 
         # 4. 쿼리 준비
