@@ -13,8 +13,7 @@
 ### 🧠 핵심 개념
 
 텍스트 전처리   문장 분리, 소문자화, 특수문자 제거, 불용어(stopword) 제거 등
-TF-IDF   단어가 문서에서 얼마나 중요한지를 수치화
-Cosine Similarity   검색어와 각 문서 간의 유사도를 수치화해서 비교
+BM25   검색어와 각 문서 간의 유사도를 수치화해서 비교
 역색인 (Inverted Index) (선택)   단어 → 포함된 문서 ID로 매핑, 대규모 문서에 유리
 
 
@@ -24,9 +23,9 @@ Cosine Similarity   검색어와 각 문서 간의 유사도를 수치화해서 
 
 * Python
 
-* Pandas / Numpy (데이터 처리)
+* Numpy (데이터 처리)
 
-* Scikit-learn (TfidfVectorizer, cosine_similarity)
+* BM25
 
 * (선택) Flask 또는 Streamlit (검색 웹 UI)
 
@@ -38,13 +37,9 @@ Cosine Similarity   검색어와 각 문서 간의 유사도를 수치화해서 
 
 2. 문서 전처리 (소문자화, 불용어 제거 등)
 
-3. TF-IDF 벡터 생성
+3. 각 문서의 BM25 점수계산
 
-4. 사용자 검색어를 같은 방식으로 벡터화
-
-5. 검색어 벡터와 각 문서 벡터 간의 cosine similarity 계산
-
-6. 유사도 높은 순서대로 문서 제목 + 일부 미리보기 출력
+4. 유사도 높은 순서대로 문서 제목 + 일부 미리보기 출력
 
 ---
 
@@ -52,7 +47,7 @@ Cosine Similarity   검색어와 각 문서 간의 유사도를 수치화해서 
 
 * 자연어 처리 기초
 
-* TF-IDF, 유사도 등 검색 기술 핵심 개념
+* BM25 알고리즘 검색 기술 핵심 개념
 
 * 파일 I/O, 텍스트 처리, 정규표현식 등 실무 스킬
 

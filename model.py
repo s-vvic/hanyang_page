@@ -106,7 +106,8 @@ class Search_docs:
 #----------------------------------------------------------------------------------------------
 
 #-------------------------------문서의 토큰화, 불용어 처리 코드------------------------------------
-    
+
+import re
 from konlpy.tag import Okt
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
@@ -120,38 +121,33 @@ class Preprocessing:
 
     # 한글 문서인지 영어 문서인지 판단
     def isEnglishOrKorean(self, input_s):
-        k_count = 0
-        e_count = 0
-        for c in input_s:
-            if ord('가') <= ord(c) <= ord('힣'):
-                k_count+=1
-            elif ord('a') <= ord(c.lower()) <= ord('z'):
-                e_count+=1
-        return 1 if k_count>e_count else 0
+        kor_str = re.sub(r"[^ㄱ-ㅣ가-힣\s]", "", input_s)
+        eng_str = re.sub(r"[^a-zA-Z\s]", "", input_s)
+        return kor_str, eng_str
 
     def Tokenize(self, docs):
         for text in [docs]:
+            kor_str, eng_str = self.isEnglishOrKorean(text)
             # 한글 문서라면
-            if self.isEnglishOrKorean(text) == 1:
+            # Okt 형태소 분석기 인스턴스 생성
+            okt = Okt()
 
-                # Okt 형태소 분석기 인스턴스 생성
-                okt = Okt()
-
-                # 명사 추출
-                nouns = okt.nouns(text)
-                return nouns
+            # 명사 추출
+            kor_nouns = okt.nouns(kor_str)
 
             # 영어 문서라면
-            elif self.isEnglishOrKorean(text) == 0:
-                stop_words = set(stopwords.words('english')) 
+            stop_words = set(stopwords.words('english')) 
 
-                word_tokens = word_tokenize(text.lower())
+            word_tokens = word_tokenize(eng_str.lower())
 
-                result = []
-                for word in word_tokens: 
-                    if word not in stop_words: 
-                        result.append(word) 
-                return result
+            eng_nouns = []
+            for word in word_tokens: 
+                if word not in stop_words: 
+                    eng_nouns.append(word)
+            
+            result = kor_nouns + eng_nouns
+            return result
+
 
 #----------------------------------------------------------------------------------------------
 
