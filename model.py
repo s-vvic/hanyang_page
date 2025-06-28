@@ -165,7 +165,7 @@ class BM_25:
         return doc_text.lower().split()
 
     def compute_idf(corpus, k1=1.5, b=0.75):
-        num_documents = len(corpus)
+        num_documents = len(str(corpus))
         doc_freq = Counter()
         for doc in corpus:
             unique_terms_in_doc = set(doc)
