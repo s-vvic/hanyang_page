@@ -109,15 +109,16 @@ class Search_docs:
 
 import re
 from konlpy.tag import Okt
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
 from nltk.corpus import stopwords
 
 class Preprocessing:
     # nltk 리소스 다운로드
-    #nltk.download('punkt')
-    #nltk.download('averaged_perceptron_tagger')
-    #nltk.download('averaged_perceptron_tagger_eng')
+    nltk.download('punkt')
+    nltk.download('averaged_perceptron_tagger')
+    nltk.download('averaged_perceptron_tagger_eng')
 
     # 한글 문서인지 영어 문서인지 판단
     def isEnglishOrKorean(self, input_s):
